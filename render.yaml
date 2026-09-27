@@ -1,0 +1,22 @@
+# Render Blueprint: describes the web service so Render can set it up from the repo.
+services:
+  - type: web
+    name: it-support-copilot
+    runtime: python
+    plan: free
+    branch: main
+    autoDeploy: true
+    # Install packages, then pre-download the embedding model into .cache/ so cold starts are faster
+    buildCommand: >-
+      pip install -r requirements.txt &&
+      python -c "import sys; sys.path.insert(0, 'src'); from config import get_embeddings; get_embeddings()"
+    startCommand: streamlit run src/ui.py --server.port $PORT --server.address 0.0.0.0 --server.headless true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: LLM_MODEL
+        value: groq:openai/gpt-oss-120b
+      - key: GROQ_API_KEY
+        sync: false          # Render asks you for the value; it is never stored in the repo
+      - key: PINECONE_API_KEY
+        sync: false
