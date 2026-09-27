@@ -11,6 +11,11 @@ DATA_DIR = ROOT / "data"
 MODEL_CACHE = ROOT / ".cache" / "fastembed"   # inside the project, so a cloud build can pre-download it
 load_dotenv(ROOT / ".env")   # locally reads .env; in the cloud, keys come from the host's environment variables
 
+# Remove stray spaces/newlines that often sneak in when pasting keys into a dashboard
+for _key in ("GROQ_API_KEY", "PINECONE_API_KEY", "LLM_MODEL"):
+    if os.getenv(_key):
+        os.environ[_key] = os.environ[_key].strip()
+
 INDEX_NAME = "it-support-kb"
 EMBED_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 EMBED_DIM = 384          # MiniLM outputs 384-dim vectors; the Pinecone index must match
