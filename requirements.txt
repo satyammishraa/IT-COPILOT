@@ -1,12 +1,11 @@
 langchain
 langchain-community
 langchain-text-splitters
-langchain-huggingface
-sentence-transformers
 langchain-pinecone
 pinecone
 langgraph
 langchain-groq
+fastembed
 ddgs
 python-dotenv
 pypdf
