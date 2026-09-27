@@ -1,19 +1,34 @@
-# IT Support – Agentic RAG Copilot
+---
+title: IT Support Copilot
+emoji: 🛠️
+colorFrom: indigo
+colorTo: blue
+sdk: docker
+app_port: 8501
+pinned: false
+short_description: Agentic RAG IT helpdesk - LangGraph, Pinecone, Groq
+---
 
-LangGraph agent: Router → Pinecone KB → grade → (Tavily web → grade) → answer / fallback.
+# Enterprise IT Support – Agentic RAG Copilot
 
-## Setup
+LangGraph agent: Router → Pinecone KB → grade (good / partial / weak) → DuckDuckGo web → grade → answer or fallback.
+Every answer shows where it came from, and the UI animates the agent's path live.
+
+## Stack
+LangGraph · Pinecone · all-MiniLM-L6-v2 embeddings · Groq (gpt-oss-120b) · DuckDuckGo search · Streamlit
+
+## Run locally
 ```bash
 python -m venv .venv && .venv\Scripts\activate   # Windows
 pip install -r requirements.txt
-cp .env.example .env   # add keys
+cp .env.example .env                            # add your keys
+python src/ingest.py                            # build the knowledge base (once)
+streamlit run src/ui.py                         # web UI
 ```
 
-## Run
+## Other scripts
 ```bash
-python src/ingest.py          # build the knowledge base
-python src/test_retrieval.py  # sanity-check retrieval
-python src/app.py             # CLI chat
-streamlit run src/ui.py       # web UI
-python src/eval.py            # route accuracy
+python src/test_retrieval.py   # check retrieval scores
+python src/app.py              # terminal chat
+python src/eval.py             # route accuracy on the test set
 ```

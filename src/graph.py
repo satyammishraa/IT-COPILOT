@@ -22,11 +22,12 @@ def build_graph():
     g.add_conditional_edges("router", lambda s: s["route"],
                             {"kb": "retrieve", "direct": "direct"})
     g.add_edge("retrieve", "grade_kb")
+    # partial KB → still search the web, but keep the KB facts for the answer
     g.add_conditional_edges("grade_kb", lambda s: s["kb_grade"],
-                            {"good": "gen_kb", "weak": "web_search"})
+                            {"good": "gen_kb", "partial": "web_search", "weak": "web_search"})
     g.add_edge("web_search", "grade_web")
     g.add_conditional_edges("grade_web", lambda s: s["web_grade"],
-                            {"good": "gen_web", "weak": "fallback"})
+                            {"good": "gen_web", "partial": "gen_web", "weak": "fallback"})
 
     for n in ["gen_kb", "gen_web", "fallback", "direct"]:
         g.add_edge(n, END)

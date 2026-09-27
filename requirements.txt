@@ -6,8 +6,8 @@ sentence-transformers
 langchain-pinecone
 pinecone
 langgraph
-langchain-openai
-tavily-python
+langchain-groq
+ddgs
 python-dotenv
 pypdf
 docx2txt

@@ -4,7 +4,8 @@ from graph import app
 LABEL = {
     "kb": "📚 Internal KB",
     "web": "🌐 Web search",
-    "fallback": "⚠️ Best effort (no verified source)",
+    "kb+web": "📚🌐 KB + Web",
+    "fallback": "⚠️ Best effort (not fully verified)",
     "direct": "💬 General",
 }
 
@@ -17,9 +18,14 @@ def main():
         if q.lower() in {"exit", "quit"}:
             break
         out = app.invoke({"question": q})
-        print(f"\nCopilot [{LABEL[out['source']]}]:\n{out['answer']}")
+        print(f"\nCopilot [{LABEL.get(out['source'], out['source'])}]:\n{out['answer']}")
         if out.get("citations"):
-            print("\nSources:", ", ".join(out["citations"]))
+            print("\nSources:")
+            for c in out["citations"]:
+                print("  -", c)
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("\nBye!")

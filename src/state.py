@@ -4,13 +4,16 @@ from typing import TypedDict, List, Any
 
 class State(TypedDict, total=False):
     question: str
-    route: str               # router decision: "kb" | "direct"
-    docs: List[Any]          # KB chunks from Pinecone
-    kb_grade: str            # "good" | "weak"
+    route: str                 # router decision: "kb" | "direct"
+    docs: List[Any]            # all chunks retrieved from Pinecone
+    kb_grade: str              # "good" | "partial" | "weak"
     kb_reason: str
-    web_results: List[dict]  # Tavily results: {title, url, content, ...}
-    web_grade: str           # "good" | "weak"
+    kb_docs_used: List[Any]    # only the chunks the grader marked relevant
+    web_query: str             # rewritten query actually sent to the search engine
+    web_results: List[dict]    # all web results
+    web_grade: str             # "good" | "partial" | "weak"
     web_reason: str
+    web_used: List[dict]       # only the results the grader marked relevant
     answer: str
-    source: str              # "kb" | "web" | "fallback" | "direct"
+    source: str                # "kb" | "web" | "kb+web" | "fallback" | "direct"
     citations: List[str]

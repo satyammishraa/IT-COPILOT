@@ -3,16 +3,24 @@ Use it every time you change a prompt, chunk size or top-K."""
 from graph import app
 
 TESTS = [
+    # direct
     ("hi there!", "direct"),
     ("thanks, that helped", "direct"),
+    # internal KB
     ("How do I connect to the VPN?", "kb"),
     ("My VPN disconnects every few minutes", "kb"),
     ("I'm locked out after too many password attempts", "kb"),
     ("How long are print jobs held before deletion?", "kb"),
     ("Can I get a MacBook instead of a Dell?", "kb"),
     ("Outlook says Working Offline", "kb"),
+    ("I lost my laptop, what do I do?", "kb"),
+    # KB answers part, web fills the rest
+    ("What VPN client does Acme use and is it free to download?", "kb+web"),
+    # web only
     ("What's new in the latest Windows 11 feature update?", "web"),
     ("How do I clear the DNS cache on macOS?", "web"),
+    ("How do I reset my Gmail password?", "web"),
+    # nobody knows
     ("What is the Wi-Fi password on floor 7 of the Acme Pune office?", "fallback"),
 ]
 
