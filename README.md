@@ -1,9 +1,7 @@
----
+
 ### Live Demo
-- 🌐 [Click here to view Assistant](https://it-support-copilot.onrender.com/)
-
-
-
+ 🌐 [Click here to view Assistant](https://it-support-copilot.onrender.com/)
+---
 title: IT Support Copilot
 emoji: 🛠️
 colorFrom: indigo
